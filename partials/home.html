@@ -1,0 +1,41 @@
+<h1>Home</h1>
+
+<table class="table table-bordered table-striped">
+	<thead>
+		<tr>
+			<th>
+				Title 
+				<a ng-click="sortBy='title'" class="glyphicon glyphicon-chevron-down"></a><a ng-click="sortBy='-title'" class="glyphicon glyphicon-chevron-up"></a>
+			</th>
+			<th>
+				Updated
+<a ng-click="sortBy='updated'" class="glyphicon glyphicon-chevron-down"></a><a ng-click="sortBy='-updated'" class="glyphicon glyphicon-chevron-up"></a>				
+			</th><th>&nbsp;</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="note in notes | filter: filter | orderBy: sortBy">
+			<td class="notetitle" ng-click="loadNote(note.key)">{{note.title}}</td>
+			<td>{{note.updated | dateFormat}}</td>
+			<td><a class="btn btn-primary" href="#/edit/{{note.key}}">Edit</a> <a class="btn btn-danger" ng-click="deleteNote(note.key)">Delete</a></td>
+		</tr>
+		</tbody>
+</table>
+
+<div class="pull-right">
+	<a href="#/edit" class="btn btn-success">Add Note</a>
+</div>
+
+<div ng-show="noteSelected">
+	<h2>{{note.title}}</h2>
+	<!-- todo: Hide if no tags, should be able to use ngshow again -->
+	<!-- tags are not look-up-able -->
+	<strong>Tags:</strong>
+	<span ng-repeat="tag in note.tags">
+		<!--<a class="tagLookup" title="Click for Related Notes">-->
+		<span class="label label-info">{{tag}}</span>
+		<!--</a>-->
+	</span><br/>
+	<div id="relatedNotesDisplay"></div>
+	<p>{{note.body}}</p>
+</div>
